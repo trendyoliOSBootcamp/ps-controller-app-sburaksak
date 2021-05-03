@@ -65,9 +65,11 @@ extension ViewController: UICollectionViewDelegateFlowLayout {
 
 extension ViewController: UICollectionViewDelegate {
     func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-        let layout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
+        guard let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout else {
+            return
+        }
         let visibleWidth = layout.minimumInteritemSpacing + cellWidth
-        let indexOfItemToSnap = round(targetContentOffset.pointee.x / visibleWidth);
+        let indexOfItemToSnap = round(targetContentOffset.pointee.x / visibleWidth)
         
         targetContentOffset.pointee = CGPoint(x: indexOfItemToSnap * visibleWidth, y: 0)
     }
