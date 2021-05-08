@@ -30,9 +30,7 @@ final class ViewController: UIViewController {
         super.viewDidLoad()
         collectionView.delegate = self
         collectionView.dataSource = self
-        collectionView.register(.init(UINib(nibName: "ControllerCollectionViewCell",
-                                            bundle: .main)),
-                                forCellWithReuseIdentifier: "psControllerIdentifier")
+        collectionView.register(cellType: ControllerCollectionViewCell.self, bundle: .main)
     }
     
     @IBAction private func basketButtonTapped() {
@@ -47,9 +45,7 @@ extension ViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "psControllerIdentifier", for: indexPath) as? ControllerCollectionViewCell else {
-            fatalError()
-        }
+        let cell = collectionView.dequeueReusableCell(with: ControllerCollectionViewCell.self, for: indexPath)
         let product = products[indexPath.item]
         cell.configure(image: product.image)
         return cell
